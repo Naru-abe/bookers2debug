@@ -28,8 +28,13 @@ class UsersController < ApplicationController
     end
   end
 
-  private
+  def daily_posts
+    user = User.find(params[:user_id])
+    @books = user.books.where(created_at: params[:created_at].to_date.all_day)
+    render :daily_posts_form
+  end
 
+  private
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
   end
